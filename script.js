@@ -1,7 +1,8 @@
 let buttongs = document.getElementById("buttongs"),
   searchBar = document.querySelector("input");
+let punk = false;
 
-buttongs.addEventListener("click", search);
+buttongs.addEventListener("click", () => {punk=false; search()});
 document.querySelector('body').addEventListener("keydown", (e) => {if(e.key=="Enter"){search()}});
 
 function search() {
@@ -18,18 +19,19 @@ function search() {
   fetch(url).then(res=>res.json())
     .then(def => 
       {console.log(def);
+        if(punk){window.location.assign(def[0].a)} else{
       results.hidden = false;
       for (let a in results.children) {
         results.children[a].children[0].textContent = def[a].h;
         results.children[a].children[0].href = def[a].a;
-      }
+      }}
     })};
 
 // buttongs.addEventListener('click',searchgs)
 
 const buttonfl = document.getElementById('buttonfl')
 
-buttonfl.addEventListener('click',searchfl)
+buttonfl.addEventListener('click', () =>{ punk = true; search()})
 
 function searchgs(e) {
     e.preventDefault()
@@ -40,7 +42,7 @@ function searchgs(e) {
 
 function searchfl(e) {
     e.preventDefault()
-    fetch('http://localhost:3000/results/random')
+    fetch('http://localhost:3000/results/random') 
     .then(resp => resp.json())
     .then(resp = openWebpage)
 }
