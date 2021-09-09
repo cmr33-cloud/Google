@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const { request } = require("express");
 app.use(cors());
+const port = 3000;
+const fullResults = require('./data');
 
 results = [
   {
@@ -199,8 +201,38 @@ app.get("/boogley", (req, res) => {
   res.send(Object.values(req.query));
 });
 
-let port = 3000;
 // To do: Get the server running
 app.listen(port, () => {
   console.log(`Server is up and running at localhost:${port}`);
 });
+function getRandomArticle () { 
+    let randNumber = Math.floor(Math.random()*fullResults.length)
+    newStory = fullResults[randNumber]
+    return newStory
+  }
+
+app.get('/', (req, res) => res.send('Hello World'))
+
+app.get('/results', (req, res) => {
+    res.send(fullResults)
+    // const headlines = fullResults.map(story => story.headline); 
+    // res.send(headlines)
+    }
+)
+
+app.get('/results/headlines', (req, res) => {
+    const headlines = fullResults.map(story => story.headline); 
+    res.send(headlines)
+    }
+)
+
+
+app.get('/results/random', (req,res) => {
+    res.send(getRandomArticle())
+
+})
+
+// app.post('/results', (req,res) => {
+
+// })
+
