@@ -1,13 +1,31 @@
 const buttongs = document.getElementById('buttongs')
 
-buttongs.addEventListener('click',search)
+buttongs.addEventListener('click',searchgs)
 
-function search(e) {
+const buttonfl = document.getElementById('buttonfl')
+
+buttonfl.addEventListener('click',searchfl)
+
+function searchgs(e) {
     e.preventDefault()
     fetch('http://localhost:3000/results')
     .then(resp => resp.json())
     .then(resp = createList)
 } 
+
+function searchfl(e) {
+    e.preventDefault()
+    fetch('http://localhost:3000/results/random')
+    .then(resp => resp.json())
+    .then(resp = openWebpage)
+}
+
+
+const openWebpage = resp => {    
+    let randLink = resp.hlink
+    window.location.assign(randLink)
+
+}
 
 const createList = resp => {
     let list = document.createElement('ul')
